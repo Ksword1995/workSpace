@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd ">
+	
+<!--	开启SpringIOC  自动扫包注解	-->
+	<context:component-scan base-package="controller" ></context:component-scan>
+	<context:component-scan base-package="ssm.exceptionhandler"></context:component-scan>
+	
+<!--  开启注解	-->
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler/>
+	
+<!--   配置视图解析器  -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" ></property>
+		<property name="prefix" value="/WEB-INF/jsp/" ></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+<!--  ViewController  -->
+	<mvc:view-controller path="/showLogin" view-name="login" />
+	<mvc:view-controller path="/showRegist" view-name="regist" />
+	<mvc:view-controller path="/showSuccess" view-name="success" />
+	<mvc:view-controller path="/showAdd" view-name="addUser" />
+	<mvc:view-controller path="/showModify" view-name="modifyUser" />
+	<mvc:view-controller path="/showRoleManage" view-name="roleManage" />
+	<mvc:view-controller path="/showCharts" view-name="echarts" />
+	<mvc:view-controller path="/showFrom" view-name="Index" />
+<!--  静态资源  -->
+	<mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+	
+	
+<!--  国际化  -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
+		<property name="basename" value="classpath:resource" ></property>
+	</bean>
+	
+<!--   Spring使用注解   -->
+	<mvc:annotation-driven>
+		<!--	json的支持	-->
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=utf-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+</beans>

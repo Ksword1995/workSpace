@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+ 	
+<!-- 	Spring核心监听器	-->
+<!--  在服务器启动的时候加载Spring容器，只会加载一次  -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	
+<!--  配置SpringMVC核心控制器，配置文件必须放在WEB-INF下，并起名叫你配置文件中的<servlet_name>-servlet	-->
+	<servlet>
+		<servlet-name>controller</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+<!-- 配置下面的参数后，主配置文件的名称就可以自己任意书写   -->
+<!--     <init-param>   -->
+<!--         <param-name>contextConfigLocation</param-name>   -->
+<!--         <param-value>classpath:*.xml</param-value>  匹配src或bin目录下所有的xml文件   -->
+<!--     </init-param>   -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>controller</servlet-name>
+		<url-pattern>/</url-pattern>
+		 <!--拦截所有请求-->  
+	</servlet-mapping>
+	
+<!--  配置由Spring提供的针对中文乱码的字符编码过滤器（post）  -->
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 	
+</web-app>
